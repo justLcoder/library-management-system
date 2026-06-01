@@ -1,4 +1,4 @@
-class Book():
+class Book:
     """Represents a book"""
 
     def __init__(self, title, author, publication_year):
@@ -11,8 +11,8 @@ class Book():
         """Returns a formatted description of the book."""
         return (
             f"ID: {self.book_id}\n"
-            f"Title: {self.title.title()}\n"
-            f"Author: {self.author.title()}\n"
+            f"Title: {self.title}\n"
+            f"Author: {self.author}\n"
             f"Publication Year: {self.publication_year}"
         )
     

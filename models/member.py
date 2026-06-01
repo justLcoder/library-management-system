@@ -1,4 +1,4 @@
-class Member():
+class Member:
     """Represents a library member."""
     
     def __init__(self, full_name):

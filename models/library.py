@@ -71,13 +71,19 @@ class Library:
         member = self.find_member(member_id)
         if member is None:
             print("Member not found.")
+            return 
         book = self.find_book_by_id(book_id)
         if book is None:
             print("Book not found.")
+            return
         if self.is_available(book_id):
             loan = Loan(member, book, date.today())
             loan.loan_id = self.next_loan_id
             self.loans.append(loan)
+            self.next_loan_id += 1
+        else:
+            print("Book is not available")
+            return
     
     def return_book(self, member_id, book_id):
         """Inactivates the matching loan."""

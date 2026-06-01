@@ -8,6 +8,7 @@ class Book():
         self.publication_year = publication_year
 
     def describe(self):
+        """Returns a formatted description of the book."""
         return (
             f"ID: {self.book_id}\n"
             f"Title: {self.title.title()}\n"

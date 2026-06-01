@@ -12,3 +12,5 @@ class Member():
             f"Full Name: {self.full_name.title()}"
         )
     
+    def __str__(self):
+        return f"{self.member_id}: {self.full_name}"

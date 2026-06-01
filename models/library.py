@@ -1,8 +1,9 @@
 from datetime import date
 
-from book import Book
-from member import Member
-from loan import Loan
+from .book import Book
+from .member import Member
+from .loan import Loan
+
 
 class Library:
     """Represents a library."""
@@ -11,9 +12,9 @@ class Library:
         self.books = [] if books is None else books
         self.members = [] if members is None else members
         self.loans = [] if loans is None else loans
-        self.next_book_id = 0
-        self.next_member_id = 0
-        self.next_loan_id = 0
+        self.next_book_id = 1
+        self.next_member_id = 1
+        self.next_loan_id = 1
 
     def add_book(self, book):
         """Adds a book to the books collection."""
@@ -21,6 +22,7 @@ class Library:
             return
         book.book_id = self.next_book_id
         self.books.append(book)
+        self.next_book_id += 1
     
     def add_member(self, member):
         """Adds a member to the members list."""
@@ -28,6 +30,7 @@ class Library:
             return
         member.member_id = self.next_member_id
         self.members.append(member)
+        self.next_member_id += 1
     
     def find_member(self, member_id):
         """Finds the matching member from the members list."""
@@ -46,8 +49,8 @@ class Library:
     def find_book_by_id(self, book_id):
         """Finds the matching book from the books collection."""
         for book in self.books:
-        if book.book_id == book_id:
-            return book
+            if book.book_id == book_id:
+                return book
     
     def is_available(self, book_id):
         """Returns whether the book is available."""
@@ -61,11 +64,16 @@ class Library:
         for loan in self.loans:
             if loan.is_active() and loan.member.member_id == member_id and loan.book.book_id == book_id:
                 return loan
+        return None
     
     def borrow_book(self, member_id, book_id):
         """Creates a loan - the member borrowed the book."""
         member = self.find_member(member_id)
+        if member is None:
+            print("Member not found.")
         book = self.find_book_by_id(book_id)
+        if book is None:
+            print("Book not found.")
         if self.is_available(book_id):
             loan = Loan(member, book, date.today())
             loan.loan_id = self.next_loan_id
@@ -73,7 +81,7 @@ class Library:
     
     def return_book(self, member_id, book_id):
         """Inactivates the matching loan."""
-        loan = self.find_active_loan(self, member_id, book_id)
+        loan = self.find_active_loan(member_id, book_id)
         if loan is not None:
             loan.returned_date = date.today()
         else:
@@ -99,9 +107,9 @@ class Library:
         """Returns the list of borrowed book by the member."""
         borrowed_books = []
         for book in self.books:
-            if find_active_loan(member.member_id, book.book_id) is not None:
+            if self.find_active_loan(member.member_id, book.book_id) is not None:
                 borrowed_books.append(book)
         return borrowed_books
     
-    
+
     

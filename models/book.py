@@ -1,5 +1,5 @@
 class Book():
-    """A class that represents a book"""
+    """Represents a book"""
 
     def __init__(self, title, author, publication_year):
         self.book_id = None

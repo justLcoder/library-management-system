@@ -1,4 +1,5 @@
 from datetime import date
+import json
 
 from .book import Book
 from .member import Member
@@ -15,6 +16,28 @@ class Library:
         self.next_book_id = 1
         self.next_member_id = 1
         self.next_loan_id = 1
+    
+    def save_to_file(self):
+        filename = 'library.json'
+        with open(filename, 'w') as f_obj:
+            content = {}
+            books = []
+            members = []
+            loans = []
+            for book in self.books:
+                books.append(book.to_dict())
+            content['books'] = books
+            for member in self.members:
+                members.append(member.to_dict())
+            content['members'] = members
+            for loan in self.loans:
+                loans.append(loan.to_dict())
+            content['loans'] = loans
+            content['next_book_id'] = self.next_book_id
+            content['next_member_id'] = self.next_member_id
+            content['next_loan_id'] = self.next_loan_id
+            json.dump(content, f_obj, indent=4)
+            
 
     def add_book(self, book):
         """Adds a book to the books collection."""
@@ -116,6 +139,27 @@ class Library:
             if self.find_active_loan(member.member_id, book.book_id) is not None:
                 borrowed_books.append(book)
         return borrowed_books
+    
+    def load_from_file(self):
+        filename = 'library.json'
+        with open(filename) as f_obj:
+            data = json.load(f_obj)
+            self.next_book_id = data['next_book_id']
+            self.next_member_id = data['next_member_id']
+            self.next_loan_id = data['next_loan_id']
+            for book in data['books']:
+                self.books.append(Book.from_dict(book))
+            for member in data['members']:
+                self.members.append(Member.from_dict(member))
+            for loan in data['loans']:
+                self.loans.append(Loan(
+                                        self.find_member(loan['member_id']), 
+                                        self.find_book_by_id(loan['book_id']),
+                                        date.fromisoformat(loan['borrowed_date'])
+                                        ))
+                self.loans[-1].loan_id = loan['loan_id']
+                if loan['returned_date'] != 'None':
+                    self.loans[-1].returned_date = date.fromisoformat(loan['returned_date'])
     
 
     

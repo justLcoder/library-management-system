@@ -36,6 +36,6 @@ class Book:
             f"Publication Year: {self.publication_year}"
         )
     
-    def __str__(self):
+    def __repr__(self):
         return f"{self.book_id}: {self.title}"
     

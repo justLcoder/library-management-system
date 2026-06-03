@@ -25,5 +25,5 @@ class Member:
             f"Full Name: {self.full_name.title()}"
         )
     
-    def __str__(self):
+    def __repr__(self):
         return f"{self.member_id}: {self.full_name}"

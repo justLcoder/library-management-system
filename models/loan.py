@@ -23,7 +23,7 @@ class Loan:
         """Return whether the loan is active or not."""
         return self.returned_date is None
     
-    def __str__(self):
+    def __repr__(self):
         return (
             f"Loan #{self.loan_id} | "
             f"{self.member.full_name} -> "

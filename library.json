@@ -1,0 +1,28 @@
+{
+    "books": [
+        {
+            "book_id": 1,
+            "title": "Harry Potter",
+            "author": "J.K. Rowling",
+            "publication_year": 1997
+        }
+    ],
+    "members": [
+        {
+            "member_id": 1,
+            "full_name": "Shahzod"
+        }
+    ],
+    "loans": [
+        {
+            "loan_id": 1,
+            "member_id": 1,
+            "book_id": 1,
+            "borrowed_date": "2026-06-03",
+            "returned_date": "None"
+        }
+    ],
+    "next_book_id": 2,
+    "next_member_id": 2,
+    "next_loan_id": 2
+}

@@ -8,6 +8,17 @@ class Loan:
         self.borrowed_date = borrowed_date
         self.returned_date = None
     
+    # Serializer:
+    def to_dict(self):
+        return {
+            'loan_id': self.loan_id,
+            'member_id': self.member.member_id,
+            'book_id': self.book.book_id,
+            'borrowed_date': str(self.borrowed_date),
+            'returned_date': str(self.returned_date),
+        }
+        
+
     def is_active(self):
         """Return whether the loan is active or not."""
         return self.returned_date is None

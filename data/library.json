@@ -1,0 +1,38 @@
+{
+    "books": [
+        {
+            "book_id": 1,
+            "title": "The Hobbit",
+            "author": "J.R.R. Tolkien",
+            "publication_year": 1937
+        },
+        {
+            "book_id": 2,
+            "title": "1984",
+            "author": "George Orwell",
+            "publication_year": 1949
+        }
+    ],
+    "members": [
+        {
+            "member_id": 1,
+            "full_name": "Alice Johnson"
+        },
+        {
+            "member_id": 2,
+            "full_name": "Bob Smith"
+        }
+    ],
+    "loans": [
+        {
+            "loan_id": 1,
+            "member_id": 1,
+            "book_id": 1,
+            "borrowed_date": "2026-06-04",
+            "returned_date": "2026-06-04"
+        }
+    ],
+    "next_book_id": 3,
+    "next_member_id": 3,
+    "next_loan_id": 2
+}

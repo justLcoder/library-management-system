@@ -1,24 +1,26 @@
 from datetime import date
 import json
 
-from .book import Book
-from .member import Member
-from .loan import Loan
+from models.book import Book
+from models.member import Member
+from models.loan import Loan
 
 
 class Library:
     """Represents a library."""
 
-    def __init__(self, books = None, members = None, loans = None):
+    def __init__(self, books = None, members = None, loans = None, auto_load = True):
         self.books = [] if books is None else books
         self.members = [] if members is None else members
         self.loans = [] if loans is None else loans
         self.next_book_id = 1
         self.next_member_id = 1
         self.next_loan_id = 1
+        if auto_load:
+            self.load_from_file()
     
     def save_to_file(self):
-        filename = 'library.json'
+        filename = 'data/library.json'
         with open(filename, 'w') as f_obj:
             content = {}
             books = []
@@ -145,7 +147,7 @@ class Library:
         return borrowed_books
     
     def load_from_file(self):
-        filename = 'library.json'
+        filename = 'data/library.json'
         try:
             with open(filename) as f_obj:
                 data = json.load(f_obj)

@@ -15,7 +15,9 @@ class Loan:
             'member_id': self.member.member_id,
             'book_id': self.book.book_id,
             'borrowed_date': str(self.borrowed_date),
-            'returned_date': str(self.returned_date),
+            'returned_date': (str(self.returned_date) 
+                              if self.returned_date is not None 
+                              else None)
         }
         
 

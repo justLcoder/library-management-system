@@ -46,6 +46,7 @@ class Library:
         book.book_id = self.next_book_id
         self.books.append(book)
         self.next_book_id += 1
+        self.save_to_file()
     
     def add_member(self, member):
         """Adds a member to the members list."""
@@ -54,6 +55,7 @@ class Library:
         member.member_id = self.next_member_id
         self.members.append(member)
         self.next_member_id += 1
+        self.save_to_file()
     
     def find_member(self, member_id):
         """Finds the matching member from the members list."""
@@ -104,8 +106,9 @@ class Library:
             loan.loan_id = self.next_loan_id
             self.loans.append(loan)
             self.next_loan_id += 1
+            self.save_to_file()
         else:
-            print("Book is not available")
+            print("Book is not available.")
             return
     
     def return_book(self, member_id, book_id):
@@ -113,6 +116,7 @@ class Library:
         loan = self.find_active_loan(member_id, book_id)
         if loan is not None:
             loan.returned_date = date.today()
+            self.save_to_file()
         else:
             print("Loan not found.")
     
@@ -142,8 +146,16 @@ class Library:
     
     def load_from_file(self):
         filename = 'library.json'
-        with open(filename) as f_obj:
-            data = json.load(f_obj)
+        try:
+            with open(filename) as f_obj:
+                data = json.load(f_obj)
+        except FileNotFoundError:
+            print(f"The file {filename} was not found.")
+            return
+        except json.JSONDecodeError:
+            print(f"The file {filename} is corrupted or empty.")
+            return
+        else:
             self.next_book_id = data['next_book_id']
             self.next_member_id = data['next_member_id']
             self.next_loan_id = data['next_loan_id']
@@ -158,8 +170,8 @@ class Library:
                                         date.fromisoformat(loan['borrowed_date'])
                                         ))
                 self.loans[-1].loan_id = loan['loan_id']
-                if loan['returned_date'] != 'None':
+                if loan['returned_date'] is not None:
                     self.loans[-1].returned_date = date.fromisoformat(loan['returned_date'])
     
 
-    
+        
